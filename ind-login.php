@@ -10,7 +10,28 @@ include "login.php";
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" type="text/css" href="assets/bootstrap/css/bootstrap.min.css">
+    <script src="assets/jquery-3.4.1.min.js" type="text/javascript"></script>
+	<script src="assets/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    
+    <!-- JS -->
+    <script type="text/javascript">
+    	$(document).ready(function(){
+    		
+    		$(document).on("change",".session-sel",function(e){
+    			var ses = $(this).val();
+    			if(ses == "siswa"){
+    				$("#username").attr("placeholder","NISN");
+    			}else if(ses == "guru"){
+    				$("#username").attr("placeholder","Kode Guru");
+    			}else{
+    				$("#username").attr("placeholder","Username");
+    			}
+    		});
+
+    	});
+    </script>
 </head>
+
 <body class="text-center mt-5">
 	<section class="container-fluid pt-5">
 		<section class="row justify-content-center">
@@ -19,6 +40,12 @@ include "login.php";
 				  <img class="mb-3" src="4.jpeg" alt="" width="75">
 				  <h1 class="h3 mb-4 font-weight-normal">Please sign in</h1>
 				  <span><?php echo $error; ?></span><br>
+				  <select name="sessionname" class="form-control session-sel">
+					  <option value="0" selected hidden>Login Sebagai</option>
+					  <option value="siswa">Siswa</option>
+					  <option value="guru">Guru</option>
+					  <option value="admin">Administrator</option>
+				  </select><br>
 				  <input type="text" id="username" name="username"class="form-control" placeholder="Username" required autofocus><br>	
 				  <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
 				  <div class="checkbox mb-3">
@@ -34,7 +61,4 @@ include "login.php";
 		</section>
 	</section>
 </body>
-
-<script src="assets/jquery-3.4.1.min.js" type="text/javascript"></script>
-<script src="assets/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 </html>

@@ -7,11 +7,11 @@ session_start();// Starting Session
 // Storing Session
 $user_check=$_SESSION['login_guru'];
 // SQL Query To Fetch Complete Information Of User
-$ses_sql = mysqli_query($connection, "select username from user where username='$user_check'");
+$ses_sql = mysqli_query($connection, "select guru_cd, nama from guru where guru_cd='$user_check'");
 $row = mysqli_fetch_assoc($ses_sql);
-$login_session = $row['username'];
+$login_session = $row['nama'];
 if(!isset($login_session)){
 mysqli_close($connection); // Closing Connection
-header('Location:ind-login.php'); // Redirecting To Home Page
+header('Location:../ind-login.php'); // Redirecting To Home Page
 }
 ?>

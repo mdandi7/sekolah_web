@@ -105,6 +105,8 @@ Website Sekolah
         <li>Mewujudkan sekolah hijau ( Gereen School ).</li>
         <li>Pembiasaan 3 K( Kebersihan diri, Kebersihan Kelas, dan Kebersihan lingkungan) dan 3S (Senyum, Sapa, Salam)</li></p>
       </div>
+
+      
       <div class="tab-pane fade" id="list-siswa" role="tabpanel" aria-labelledby="list-siswa-list">
       <form>
         <div class="form-group row">

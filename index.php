@@ -29,6 +29,11 @@ include "configdb.php";
     .carousel-multi-item-2 .card img {
     border-radius: 2px; }
 	</style>
+
+  <script src="assets/jquery-3.4.1.min.js" type="text/javascript"></script>
+  <script src="assets/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+  <script src="assets/jsFuncAdm-shw.js" type="text/javascript"></script>
+
 </head>
 <body class="text-monospace">
 
@@ -264,37 +269,13 @@ Website Sekolah
         <table class="table table-hover table-responsive-md text-center"><h4 class="text-center">Laporan Daftar Mata Pelajaran</h3><br>
           <thead class="thead-light">
             <tr>
-              <th scope="col">No</th>
-              <th scope="col">Kode</th>
+              <th scope="col">Kode Mapel</th>
               <th scope="col">Mata Pelajaran</th>
+              <th scope="col">Kelas</th>
+              <th scope="col">Delete</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Larry</td>
-              <td>the Bird</td>
-            </tr>
-            <tr>
-              <th scope="row">4</th>
-              <td>Larry</td>
-              <td>the Bird</td>
-            </tr>
-            <tr>
-              <th scope="row">5</th>
-              <td>Larry</td>
-              <td>the Bird</td>
-            </tr>
+          <tbody class="mp-table">
           </tbody>
         </table>
       </div>
@@ -427,7 +408,4 @@ Website Sekolah
 
 
 </body>
-
-<script src="assets/jquery-3.4.1.min.js" type="text/javascript"></script>
-<script src="assets/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 </html>

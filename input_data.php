@@ -32,6 +32,13 @@ include "configdb.php";
 </head>
 <body class="text-monospace">
 
+<script src="assets/jquery-3.4.1.min.js" type="text/javascript"></script>
+<script src="assets/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="assets/jsFuncAdm-inp.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+  
+</script>
 
 
 <!-- jumbotron -->
@@ -52,7 +59,7 @@ Website Sekolah
 </button>
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav ml-auto mr-sm-2">
-      <li class="nav-item show active">
+      <li class="nav-item">
         <a class="nav-link" href="index.php">Beranda</a>
       </li>
       <!-- <li class="nav-item">
@@ -64,7 +71,7 @@ Website Sekolah
       <li class="nav-item">
         <a class="nav-link" href="#">Siswa</a>
       </li> -->
-      <li class="nav-item">
+      <li class="nav-item show active">
         <a class="nav-link" href="input_data.php">Olah Data</a>
       </li>
       <!-- <li class="nav-item dropdown">
@@ -89,15 +96,50 @@ Website Sekolah
 <div class="container-fluid row pl-0 pb-0">
   <div class="col-4 bg-dark pb-3">
     <div class="list-group " id="list-tab" role="tablist">
-      <a class="list-group-item list-group-item-action active" id="list-kelas-list" data-toggle="list" href="#list-kelas" role="tab" aria-controls="kelas">Kelas</a>
+      <a class="list-group-item list-group-item-action active" id="list-mapel-list" data-toggle="list" href="#list-mapel" role="tab" aria-controls="mapel">Mata Pelajaran</a>
+      <a class="list-group-item list-group-item-action" id="list-kelas-list" data-toggle="list" href="#list-kelas" role="tab" aria-controls="kelas">Kelas</a>
       <a class="list-group-item list-group-item-action" id="list-guru-list" data-toggle="list" href="#list-guru" role="tab" aria-controls="guru">Guru</a>
-      <a class="list-group-item list-group-item-action" id="list-mapel-list" data-toggle="list" href="#list-mapel" role="tab" aria-controls="mapel">Jadwal Pelajaran</a>
+      <a class="list-group-item list-group-item-action" id="list-jadwal-list" data-toggle="list" href="#list-jadwal" role="tab" aria-controls="jadwal">Jadwal Pelajaran</a>
       <a class="list-group-item list-group-item-action" id="list-wakel-list" data-toggle="list" href="#list-wakel" role="tab" aria-controls="wakel">Wali Kelas</a>
     </div>
   </div>
   <div class="col-8">
-    <div class="tab-content pt-4" id="nav-tabContent">
-      <div class="tab-pane fade show active" id="list-kelas" role="tabpanel" aria-labelledby="list-kelas-list">
+    <div class="tab-content pt-4 " id="nav-tabContent">
+
+      <!-- MAPEL -->
+      <div class="tab-pane fade show active text-justify" id="list-mapel" role="tabpanel" aria-labelledby="list-mapel-list">
+        <div class="row">
+        <div class="col">
+        <div class="mp-err-msg" align="center" style="color: red"></div>
+        <div class="form-group">
+          <label for="exampleFormControlInput1">Kode Mapel</label>
+          <input type="text" class="form-control mp-cd" placeholder="Kode Mapel" readonly="readonly">
+          <label for="exampleFormControlInput1">Nama Mapel</label>
+          <input type="text" class="form-control mp-name" placeholder="Nama Mapel">
+        </div>
+
+        </div>
+        <div class="col">
+        <div class="form-group">
+          <label>Kelas</label>
+          <select class="form-control mp-kelas">
+            <option value="0" selected hidden>Kelas</option>
+            <option value="X">X</option>
+            <option value="XI">XI</option>
+            <option value="XII">XII</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary mb-2 btn-add-mapel">Submit</button>
+        </div>
+      </div>
+      <br>
+      <hr style="border-top: 3px double #8c8b8b;">
+      <br>
+      </div>
+
+      <!-- END OF MAPEL -->
+
+      <div class="tab-pane fade" id="list-kelas" role="tabpanel" aria-labelledby="list-kelas-list">
       <div class="row">
         <div class="col">
         <form>
@@ -125,35 +167,105 @@ Website Sekolah
         </div>
       </div>
       </div>
+
+      <!-- GURU -->
       <div class="tab-pane fade text-justify" id="list-guru" role="tabpanel" aria-labelledby="list-guru-list">
-        <div class="row">
-        <div class="col">
-        <form>
-        <div class="form-group">
-          <label for="exampleFormControlInput1">Tambah Guru</label>
-          <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Nama Kelas">
+        <div class="form-input-guru">
+        <div class="guru-err-msg" align="center" style="color: red"></div>
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Kode Guru</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control guru-cd" placeholder="Kode Guru">
+          </div>
         </div>
-        <button type="submit" class="btn btn-primary mb-2">Submit</button>
-      </form>
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Nama</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control guru-nm" placeholder="Nama">
+          </div>
         </div>
-        <div class="col">
-        <form>
-        <div class="form-group">
-          <label for="exampleFormControlSelect1">Hapus Guru</label>
-          <select class="form-control" id="exampleFormControlSelect1">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">NIP</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control guru-nip" placeholder="NIP">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Jenis Kelamin</label>
+          <div class="col-sm-8">
+            <select class="form-control guru-jns-klm" placeholder="Jenis Kelamin">
+            <option value="0" selected readonly hidden>Jenis Kelamin</option>
+            <option value="Laki-Laki">Laki-Laki</option>
+            <option value="Perempuan">Perempuan</option>
           </select>
+          </div>
         </div>
-        <button type="submit" class="btn btn-primary mb-2">Submit</button>
-        </form>
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Tempat Lahir</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control guru-tpt-lhr" placeholder="Tempat Lahir">
+          </div>
         </div>
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Tanggal Lahir</label>
+          <div class="col-sm-8">
+            <input type="date" class="form-control guru-tgl-lhr">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Alamat</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control guru-alamat" placeholder="Alamat">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">No. Telepon</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control guru-tlp" placeholder="No. Telepon">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Pendidikan Terakhir</label>
+          <div class="col-sm-8">
+            <select class="form-control guru-pddk" placeholder="Pendidikan">
+            <option value="0" selected hidden readonly>Pendidikan</option>
+            <option>D1/D2/D3</option>
+            <option>Sarjana (S1)</option>
+            <option>Magister (S2)</option>
+            <option>Doctor (S3)</option>
+          </select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Jabatan</label>
+          <div class="col-sm-8">
+            <select class="form-control guru-jbtn" placeholder="Jabatan">
+            <option value="0" selected hidden readonly>Jabatan</option>
+            <option>Kepala Sekolah</option>
+            <option>Guru Tetap</option>
+            <option>Guru Honorer</option>
+          </select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Password</label>
+          <div class="col-sm-8">
+            <input type="Password" class="form-control guru-pass" placeholder="Password">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Mata Pelajaran</label>
+          <div class="col-sm-8 option-guru-mp">
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary mb-2 btn-add-guru">Submit</button>
+        <br>
       </div>
       </div>
-      <div class="tab-pane fade" id="list-mapel" role="tabpanel" aria-labelledby="list-mapel-list">
+
+      <!-- END OF GURU-->
+
+      <div class="tab-pane fade" id="list-jadwal" role="tabpanel" aria-labelledby="list-jadwal-list">
         <form>
           <div class="form-group row">
             <label for="inputPassword" class="col-sm-2 col-form-label">Tahun Pelajaran</label>
@@ -382,7 +494,4 @@ Website Sekolah
 
 
 </body>
-
-<script src="assets/jquery-3.4.1.min.js" type="text/javascript"></script>
-<script src="assets/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 </html>

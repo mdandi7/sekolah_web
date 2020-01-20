@@ -11,6 +11,7 @@
             // Define $username and $password
             $username=$_POST['username'];
             $password=$_POST['password'];
+            $session_nm=$_POST['sessionname'];
             // Establishing Connection with Server by passing server_name, user_id and password as a parameter
             $connection = mysqli_connect("localhost", "root", "", "sekolah");
             // To protect MySQL injection for Security purpose
@@ -20,67 +21,55 @@
             $password = mysqli_real_escape_string($connection, $password);
 
             // SQL query to fetch information of registerd users and finds user match.
-            $query = mysqli_query($connection, "select * from user where password='$password' AND username='$username'");
-
-            $rows = mysqli_num_rows($query);
-            $result = mysqli_fetch_assoc($query);
+            if($session_nm == "0"){
+                $error = "Pilih Login session anda";
             
-            if ($rows == 0) {
-                $error = "Username or Password is invalid";
-                //header('Location:index.php');
-            
-            }  elseif($result['user_ind'] == '1'){
-                        $_SESSION['login_admin']=$username; // Initializing Session
-                        header("Location: index.php"); // Redirecting To Other Page
-                    }   elseif($result['user_ind'] == '2'){
-                                $_SESSION['login_siswa']=$username; // Initializing Session
-                                header("Location: siswa/index.php"); // Redirecting To Other Page // SEMENTARA
-                            }   elseif($result['user_ind'] == '3'){
-                                        $_SESSION['login_guru']=$username; // Initializing Session
-                                        header("Location: guru/index.php"); // Redirecting To Other Page // SEMENTARA
-                                    }   elseif($result['user_ind'] == '4'){
-                                                $_SESSION['login_kepsek']=$username; // Initializing Session
-                                                header("Location: kepsek/index.php"); // Redirecting To Other Page // SEMENTARA
-                                            }
+            //Siswa authorize
+            }elseif($session_nm == "siswa"){
+                $query = mysqli_query($connection, "select * from siswa where password='$password' AND nisn='$username'");
 
-            ob_end_flush();
-            mysqli_close($connection); // Closing Connection
-        }
-    }
+                $rows = mysqli_num_rows($query);
+                $result = mysqli_fetch_assoc($query);
+                
+                if ($rows == 0) {
+                    $error = "Username or Password is invalid";
+                }else{
+                    $_SESSION['login_siswa']=$username; // Initializing Session
+                    header("Location: siswa/index.php"); // Redirecting To Other Page                
+                }
 
-    if (isset($_POST['regist'])) {
-        if (empty($_POST['username']) || empty($_POST['password'])) {
-        $error = "Username or Password is invalid";
-        }
-        else
-        {
-            // Define $username and $password
-            $name=$_POST['name'];
-            $username=$_POST['username'];
-            $email=$_POST['email'];
-            $password=$_POST['password'];
-            // Establishing Connection with Server by passing server_name, user_id and password as a parameter
-            $connection = mysqli_connect("localhost", "root", "", "merpati_futsal");
-            // To protect MySQL injection for Security purpose
-            $username = stripslashes($username);
-            $password = stripslashes($password);
-            $username = mysqli_real_escape_string($connection, $username);
-            $password = mysqli_real_escape_string($connection, $password);
+            //Guru authorize
+            }elseif($session_nm == "guru"){
+                $query = mysqli_query($connection, "select * from guru where password='$password' AND guru_cd='$username'");
 
-            // SQL query to fetch information of registerd users and finds user match.
-            $query = mysqli_query($connection, "select * from user where username='$username'");
+                $rows = mysqli_num_rows($query);
+                $result = mysqli_fetch_assoc($query);
+                
+                if ($rows == 0) {
+                    $error = "Username or Password is invalid";
+                }elseif($result['jabatan'] == "Kepala Sekolah"){
+                    $_SESSION['login_kepsek']=$username; // Initializing Session
+                    header("Location: kepsek/index.php"); // Redirecting To Other Page                
+                }else{
+                    $_SESSION['login_guru']=$username; // Initializing Session
+                    header("Location: guru/index.php"); // Redirecting To Other Page                
+                }
 
-            $rows = mysqli_num_rows($query);
-            $result = mysqli_fetch_assoc($query);
-            
-            if ($rows > 0) {
-                $error = "Username already exist!";
-                //header('Location:index.php');
-            
-            }  else{
-                        $query = mysqli_query($connection, "INSERT INTO user(nama,username,password,email,user_ind) VALUES ('$name','$username','$password','$email',2)"); // Query to insert new users
-                        header("Location: ind-login.php"); // Redirecting To Other Page
-                    }            
+            //Admin authorize
+            }elseif($session_nm == "admin"){
+                $query = mysqli_query($connection, "select * from user where password='$password' AND username='$username'");
+
+                $rows = mysqli_num_rows($query);
+                $result = mysqli_fetch_assoc($query);
+                
+                if ($rows == 0) {
+                    $error = "Username or Password is invalid";
+                }else{
+                    $_SESSION['login_admin']=$username; // Initializing Session
+                    header("Location: index.php"); // Redirecting To Other Page                
+                }
+            }
+
             ob_end_flush();
             mysqli_close($connection); // Closing Connection
         }
