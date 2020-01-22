@@ -100,7 +100,7 @@ Website Sekolah
       <a class="list-group-item list-group-item-action" id="list-kelas-list" data-toggle="list" href="#list-kelas" role="tab" aria-controls="kelas">Kelas</a>
       <a class="list-group-item list-group-item-action" id="list-guru-list" data-toggle="list" href="#list-guru" role="tab" aria-controls="guru">Guru</a>
       <a class="list-group-item list-group-item-action" id="list-jadwal-list" data-toggle="list" href="#list-jadwal" role="tab" aria-controls="jadwal">Jadwal Pelajaran</a>
-      <a class="list-group-item list-group-item-action" id="list-wakel-list" data-toggle="list" href="#list-wakel" role="tab" aria-controls="wakel">Wali Kelas</a>
+      <a class="list-group-item list-group-item-action" id="list-siswa-list" data-toggle="list" href="#list-siswa" role="tab" aria-controls="siswa">Siswa</a>
     </div>
   </div>
   <div class="col-8">
@@ -139,34 +139,34 @@ Website Sekolah
 
       <!-- END OF MAPEL -->
 
+      <!-- KELAS  -->      
       <div class="tab-pane fade" id="list-kelas" role="tabpanel" aria-labelledby="list-kelas-list">
-      <div class="row">
+        <div class="row">
         <div class="col">
-        <form>
+        <div class="kls-err-msg" align="center" style="color: red"></div>
         <div class="form-group">
-          <label for="exampleFormControlInput1">Tambah Kelas</label>
-          <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Nama Kelas">
+          <label for="exampleFormControlInput1">Kode Kelas</label>
+          <input type="text" class="form-control kls-cd" placeholder="Kode Kelas" readonly="readonly">
+          <label for="exampleFormControlInput1">Wali Kelas</label>
         </div>
-        <button type="submit" class="btn btn-primary mb-2">Submit</button>
-      </form>
+        <div class="form-group option-kelas-guru">
+        </div>
         </div>
         <div class="col">
-        <form>
         <div class="form-group">
-          <label for="exampleFormControlSelect1">Hapus Kelas</label>
-          <select class="form-control" id="exampleFormControlSelect1">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
+          <label>Kelas</label>
+          <select class="form-control kelas-kls">
+            <option value="0" selected hidden>Kelas</option>
+            <option value="X">X</option>
+            <option value="XI">XI</option>
+            <option value="XII">XII</option>
           </select>
         </div>
-        <button type="submit" class="btn btn-primary mb-2">Submit</button>
-        </form>
+        <button type="submit" class="btn btn-primary mb-2 btn-add-kls">Tambah Kelas</button>
         </div>
       </div>
       </div>
+      <!-- END OF KELAS -->
 
       <!-- GURU -->
       <div class="tab-pane fade text-justify" id="list-guru" role="tabpanel" aria-labelledby="list-guru-list">
@@ -175,7 +175,12 @@ Website Sekolah
         <div class="form-group row">
           <label class="col-sm-4 col-form-label">Kode Guru</label>
           <div class="col-sm-8">
-            <input type="text" class="form-control guru-cd" placeholder="Kode Guru">
+            <input type="text" class="form-control guru-cd" placeholder="GR" readonly>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Mata Pelajaran</label>
+          <div class="col-sm-8 option-guru-mp">
           </div>
         </div>
         <div class="form-group row">
@@ -253,11 +258,6 @@ Website Sekolah
             <input type="Password" class="form-control guru-pass" placeholder="Password">
           </div>
         </div>
-        <div class="form-group row">
-          <label class="col-sm-4 col-form-label">Mata Pelajaran</label>
-          <div class="col-sm-8 option-guru-mp">
-          </div>
-        </div>
         <button type="submit" class="btn btn-primary mb-2 btn-add-guru">Submit</button>
         <br>
       </div>
@@ -265,96 +265,62 @@ Website Sekolah
 
       <!-- END OF GURU-->
 
+      <!-- JADWAL -->
+
       <div class="tab-pane fade" id="list-jadwal" role="tabpanel" aria-labelledby="list-jadwal-list">
-        <form>
           <div class="form-group row">
-            <label for="inputPassword" class="col-sm-2 col-form-label">Tahun Pelajaran</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="inputPassword" placeholder="Tahun Pelajaran">
+            <label class="col-sm-2 col-form-label">Kelas</label>
+            <div class="col-sm-10 option-jadwal-kls">
             </div>
           </div>
           <div class="form-group row">
-            <label for="exampleFormControlSelect1" class="col-sm-2 col-form-label">Kelas</label>
-            <div class="col-sm-10">
-              <select class="form-control" id="exampleFormControlSelect1">
-              <option selected>Pilih</option>
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
+            <label class="col-sm-2 col-form-label">Hari</label>
+            <div class="col-sm-10 option-jadwal-hr">
+            <select class="form-control jadwal-hari">
+              <option selected>Hari</option>
+              <option value="Senin">Senin</option>
+              <option value="Selasa">Selasa</option>
+              <option value="Rabu">Rabu</option>
+              <option value="Kamis">Kamis</option>
+              <option value="Jumat">Jumat</option>
             </select>
             </div>
           </div>
           <div class="form-group row">
-            <label for="exampleFormControlSelect1" class="col-sm-2 col-form-label">Hari</label>
-            <div class="col-sm-10">
-              <select class="form-control" id="exampleFormControlSelect1">
-              <option selected>Pilih</option>
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
+            <label class="col-sm-2 col-form-label">Jam Ke-</label>
+            <div class="col-sm-10 option-jadwal-jm">
+            <select class="form-control jadwal-jam">
+              <option selected>Jam</option>
+              <option value="1">1 (07:30 - 08:30)</option>
+              <option value="2">2 (08:30 - 09:30)</option>
+              <option value="3">3 (10:00 - 11:00)</option>
+              <option value="4">4 (11:00 - 12:00)</option>
+              <option value="5">5 (13:00 - 14:00)</option>
+              <option value="6">6 (14:00 - 15:00)</option>
             </select>
             </div>
           </div>
           <div class="form-group row">
-            <label for="exampleFormControlSelect1" class="col-sm-2 col-form-label">Jam Ke-</label>
-            <div class="col-sm-10">
-              <select class="form-control" id="exampleFormControlSelect1">
-              <option selected>Pilih</option>
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-            </select>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="exampleFormControlSelect1" class="col-sm-2 col-form-label">Pukul</label>
-            <div class="col-sm-10">
-              <select class="form-control" id="exampleFormControlSelect1">
-              <option selected>Pilih</option>
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-            </select>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="exampleFormControlSelect1" class="col-sm-2 col-form-label">Mata Pelajaran</label>
-            <div class="col-sm-10">
-              <select class="form-control" id="exampleFormControlSelect1">
-              <option selected>Pilih</option>
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
+            <label class="col-sm-2 col-form-label">Mata Pelajaran</label>
+            <div class="col-sm-10 option-jadwal-mp">
+              <select class="form-control" disabled="disabled">
+              <option selected>Mata Pelajaran</option>
             </select>
             </div>
           </div>
           <div class="form-group row">
             <label for="exampleFormControlSelect1" class="col-sm-2 col-form-label">Nama Guru</label>
-            <div class="col-sm-10">
-              <select class="form-control" id="exampleFormControlSelect1">
-              <option selected>Pilih</option>
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
+            <div class="col-sm-10 option-jadwal-guru">
+              <select class="form-control" id="exampleFormControlSelect1" disabled="disabled">
+              <option selected>Guru</option>
             </select>
             </div>
           </div>
-          <button type="submit" class="btn btn-primary mb-2">Submit</button>
-        </form>
+          <button type="submit" class="btn btn-primary mb-2 btn-add-jadwal">Submit Jadwal</button>
       </div>
-      <div class="tab-pane fade" id="list-wakel" role="tabpanel" aria-labelledby="list-wakel-list">
+      <!-- END OF JADWAL -->
+
+      <div class="tab-pane fade" id="list-siswa" role="tabpanel" aria-labelledby="list-siswa-list">
         <form>
           <div class="form-group row">
             <label for="exampleFormControlSelect1" class="col-sm-2 col-form-label">Kelas</label>

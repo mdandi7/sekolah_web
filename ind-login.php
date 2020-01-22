@@ -22,7 +22,7 @@ include "login.php";
     			if(ses == "siswa"){
     				$("#username").attr("placeholder","NISN");
     			}else if(ses == "guru"){
-    				$("#username").attr("placeholder","Kode Guru");
+    				$("#username").attr("placeholder","NIP");
     			}else{
     				$("#username").attr("placeholder","Username");
     			}

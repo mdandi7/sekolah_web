@@ -114,75 +114,242 @@ $(document).ready(function(){
 
 	onLoadMpGuru();
 
+	$(document).on("change",".guru-mp-cd",function(e){
+		var mpCd = $(this).val();
+		
+		$.ajax({
+			type : 'POST',
+			url : 'ajax-adm.php',
+			data : {
+				txInd : 'guruCd-find',
+				mpCd : mpCd,
+			},
+			complete : function(response){
+				var GuruCd = parseInt(response.responseText)+ 1;
+				mpCd = mpCd.replace("-","");
+				GuruCd = "GR" + mpCd + "-" + GuruCd;
+				$(".guru-cd").val(GuruCd);
+			},
+			erorr : function(){
+				alert("Connection to database failed!");
+			}
+		});
+	})
+
 	$(document).on("click",".btn-add-guru",function(e){
 
 		$(".guru-err-msg").html("");
 
 		var guruMpCd = $(".guru-mp-cd").val();
+		var ScInd = 1;
 		//alert(guruMpCd);
+
+		$(".form-input-guru").find("select").each(function(){
+
+			var pd = $(this).attr("placeholder");
+			var pdFinal = 'Pilih ' + pd;
+		
+			 if($(this).val() == '0'){
+				$(".guru-err-msg").html(pdFinal);
+				ScInd = 0;
+				return false;
+			}
+		});
 
 		$(".form-input-guru").find("input").each(function(){
 			
 			var pd = $(this).attr("placeholder");
 			var pdFinal = pd + ' Tidak boleh kosong!';
 		
-			if($(this).prop('readonly')){
-				$(".guru-err-msg").html("Masukkan data dengan benar!");
-				return false;
-			}else if($(this).val() == ''){
+			if($(this).val() == ''){
 				$(".guru-err-msg").html(pdFinal);
+				ScInd = 0;
 				return false;				
 			}
 		});
 
+		if(ScInd == 1){
+			var guruCd = $(".guru-cd").val();
+			var guruNm = $(".guru-nm").val();
+			var guruNIP = $(".guru-nip").val();
+			var guruJnsKlm = $(".guru-jns-klm").val();
+			var guruTptLhr = $(".guru-tpt-lhr").val();
+			var guruTglLhr = $(".guru-tgl-lhr").val();
+			var guruAlmt = $(".guru-alamat").val();
+			var guruTlp = $(".guru-tlp").val();
+			var guruPddk = $(".guru-pddk").val();
+			var guruJbtn = $(".guru-jbtn").val();
+			var guruPass = $(".guru-pass").val();
+			var guruMp = $(".guru-mp-cd").val();
 
-		$(".form-input-guru").find("select").each(function(){
-			
-			var pd = $(this).attr("placeholder");
-			var pdFinal = 'Pilih ' + pd;
+			$.ajax({
+				type : 'POST',
+				url : 'ajax-adm.php',
+				async : false,
+				data : {
+					txInd : 'guru-insert',
+					guruCd : guruCd,
+					guruNm : guruNm,
+					guruNIP : guruNIP,
+					guruJnsKlm : guruJnsKlm,
+					guruTptLhr : guruTptLhr,
+					guruTglLhr : guruTglLhr,
+					guruAlmt : guruAlmt,
+					guruTlp : guruTlp,
+					guruPddk : guruPddk,
+					guruJbtn : guruJbtn,
+					guruPass : guruPass,
+					guruMp : guruMp,
+				},
+				complete : function(response){
+					if(response.responseText == '1'){
+						$(".guru-err-msg").html("Guru " + guruNm + " berhasil di input");
+						$(".guru-mp-cd").trigger("change");
+						$(".form-input-guru").find("input").each(function(){
+							$(this).val('');
+						});
+						fillDate();
+						onLoadGrKelas();	
+					}else{
+						$(".guru-err-msg").html("NIP ini telah terpakai");
+					}
+					
+				},
+				erorr : function(){
+					alert("Connection to database failed!");
+				}
+			});
+			return false;
+		}else{
+			return false;
+		}
 		
-			 if($(this).val() == '0'){
-				$(".guru-err-msg").html(pdFinal);
-				return false;				
-			}
-		});
+	});
+	// END OF GURU
 
-		var guruCd = $(".guru-cd").val();
-		var guruNm = $(".guru-nm").val();
-		var guruNIP = $(".guru-nip").val();
-		var guruJnsKlm = $(".guru-jns-klm").val();
-		var guruTptLhr = $(".guru-tpt-lhr").val();
-		var guruTglLhr = $(".guru-tgl-lhr").val();
-		var guruAlmt = $(".guru-alamat").val();
-		var guruTlp = $(".guru-tlp").val();
-		var guruPddk = $(".guru-pddk").val();
-		var guruJbtn = $(".guru-jbtn").val();
-		var guruPass = $(".guru-pass").val();
-		var guruMp = $(".guru-mp-cd").val();
-
-
-		/*$.ajax({
+	//KELAS
+	function onLoadGrKelas(e){
+		$.ajax({
 			type : 'POST',
 			url : 'ajax-adm.php',
 			data : {
-				txInd : 'mapel-insert',
-				mpCd : mp_cd,
-				mpNm : mp_nm,
-				kelas : kelas,
+				txInd : 'guru-for-kelas',
 			},
 			complete : function(response){
-				$(".mp-err-msg").html(mp_nm + " telah di input");
-				$(".mp-kelas").trigger("change");
-				$(".mp-name").val("");
-				onLoadMpGuru();
+				$(".option-kelas-guru").html(response.responseText);
 			},
 			erorr : function(){
 				alert("Connection to database failed!");
 			}
-		});*/
-		
+		});
+	}
+
+	onLoadGrKelas();
+
+	$(document).on("change",".kelas-kls",function(e){
+		var kls = $(this).val();
+
+		$.ajax({
+			type : 'POST',
+			url : 'ajax-adm.php',
+			data : {
+				txInd : 'kelas-find',
+				kls : kls,
+			},
+			complete : function(response){
+				var klsNum = parseInt(response.responseText)+ 1;
+				kelasCd = kls + "-" + klsNum;
+				$(".kls-cd").val(kelasCd);
+			},
+			erorr : function(){
+				alert("Connection to database failed!");
+			}
+		});
+	})
+
+	$(document).on("click",".btn-add-kls",function(e){
+
+		$(".kls-err-msg").html("");
+		var klsGuruCd = $(".kelas-guru-cd").val();
+		var kelasKls = $(".kelas-kls").val();
+		var klsCd = $(".kls-cd").val();
+		var ScInd = 1;
+
+		if(kelasKls == "0"){
+			$(".kls-err-msg").html("Pilih Kelas.");
+			ScInd = 0;
+			return false;
+		}
+
+		if(klsGuruCd == "0"){
+			$(".kls-err-msg").html("Pilih Wali Kelas.");
+			ScInd = 0;
+			return false;
+		}
+
+		if(ScInd == 1){
+			$.ajax({
+				type : 'POST',
+				url : 'ajax-adm.php',
+				async : false,
+				data : {
+					txInd : 'kls-insert',
+					klsGuruCd : klsGuruCd,
+					kelasKls : kelasKls,
+					klsCd : klsCd,
+				},
+				complete : function(response){
+					$(".kls-err-msg").html("Kelas " + klsCd + " telah di input");
+					$(".kelas-kls").trigger("change");
+					onLoadJadwalKelas();
+				},
+				erorr : function(){
+					alert("Connection to database failed!");
+				}
+			});
+			return false;
+		}
 	});
 
+	// JADWAL 
 
+	function onLoadJadwalKelas(e){
+		$.ajax({
+			type : 'POST',
+			url : 'ajax-adm.php',
+			data : {
+				txInd : 'jadwal-drop-down',
+			},
+			complete : function(response){
+				$(".option-jadwal-kls").html(response.responseText);
+			},
+			erorr : function(){
+				alert("Connection to database failed!");
+			}
+		});
+	}
+
+	onLoadJadwalKelas();
+
+	$(document).on("change",".jadwal-kls-cd",function(e){
+		var kls = $(this).val();
+
+		$.ajax({
+			type : 'POST',
+			url : 'ajax-adm.php',
+			data : {
+				txInd : 'jadwal-find',
+				kls : kls,
+			},
+			complete : function(response){
+				var klsNum = parseInt(response.responseText)+ 1;
+				kelasCd = kls + "-" + klsNum;
+				$(".kls-cd").val(kelasCd);
+			},
+			erorr : function(){
+				alert("Connection to database failed!");
+			}
+		});
+	})
 //END OF FILE
 });

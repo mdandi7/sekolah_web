@@ -40,7 +40,7 @@
 
             //Guru authorize
             }elseif($session_nm == "guru"){
-                $query = mysqli_query($connection, "select * from guru where password='$password' AND guru_cd='$username'");
+                $query = mysqli_query($connection, "select * from guru where password='$password' AND nip='$username' AND work_ind = '1'");
 
                 $rows = mysqli_num_rows($query);
                 $result = mysqli_fetch_assoc($query);
