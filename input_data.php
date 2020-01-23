@@ -258,7 +258,7 @@ Website Sekolah
             <input type="Password" class="form-control guru-pass" placeholder="Password">
           </div>
         </div>
-        <button type="submit" class="btn btn-primary mb-2 btn-add-guru">Submit</button>
+        <button type="submit" class="btn btn-primary mb-2 btn-add-guru">Submit Guru</button>
         <br>
       </div>
       </div>
@@ -268,16 +268,17 @@ Website Sekolah
       <!-- JADWAL -->
 
       <div class="tab-pane fade" id="list-jadwal" role="tabpanel" aria-labelledby="list-jadwal-list">
+          <div class="jadwal-err-msg" align="center" style="color: red"></div>
           <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Kelas</label>
-            <div class="col-sm-10 option-jadwal-kls">
+            <label class="col-sm-4 col-form-label">Kelas</label>
+            <div class="col-sm-8 option-jadwal-kls">
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Hari</label>
-            <div class="col-sm-10 option-jadwal-hr">
+            <label class="col-sm-4 col-form-label">Hari</label>
+            <div class="col-sm-8 option-jadwal-hr">
             <select class="form-control jadwal-hari">
-              <option selected>Hari</option>
+              <option value="0" selected hidden>Hari</option>
               <option value="Senin">Senin</option>
               <option value="Selasa">Selasa</option>
               <option value="Rabu">Rabu</option>
@@ -285,12 +286,13 @@ Website Sekolah
               <option value="Jumat">Jumat</option>
             </select>
             </div>
+
           </div>
           <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Jam Ke-</label>
-            <div class="col-sm-10 option-jadwal-jm">
+            <label class="col-sm-4 col-form-label">Jam Ke-</label>
+            <div class="col-sm-8 option-jadwal-jm">
             <select class="form-control jadwal-jam">
-              <option selected>Jam</option>
+              <option value="0" selected hidden>Jam</option>
               <option value="1">1 (07:30 - 08:30)</option>
               <option value="2">2 (08:30 - 09:30)</option>
               <option value="3">3 (10:00 - 11:00)</option>
@@ -301,18 +303,18 @@ Website Sekolah
             </div>
           </div>
           <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Mata Pelajaran</label>
-            <div class="col-sm-10 option-jadwal-mp">
-              <select class="form-control" disabled="disabled">
-              <option selected>Mata Pelajaran</option>
+            <label class="col-sm-4 col-form-label">Mata Pelajaran</label>
+            <div class="col-sm-8 option-jadwal-mp">
+              <select class="form-control" readonly>
+              <option selected value = '0' hidden>Mata Pelajaran</option>
             </select>
             </div>
           </div>
           <div class="form-group row">
-            <label for="exampleFormControlSelect1" class="col-sm-2 col-form-label">Nama Guru</label>
-            <div class="col-sm-10 option-jadwal-guru">
-              <select class="form-control" id="exampleFormControlSelect1" disabled="disabled">
-              <option selected>Guru</option>
+            <label class="col-sm-4 col-form-label">Nama Guru</label>
+            <div class="col-sm-8 option-jadwal-guru">
+              <select class="form-control" readonly>
+              <option selected value = '0' hidden>Guru</option>
             </select>
             </div>
           </div>
@@ -320,49 +322,44 @@ Website Sekolah
       </div>
       <!-- END OF JADWAL -->
 
+      <!-- SISWA -->
+
       <div class="tab-pane fade" id="list-siswa" role="tabpanel" aria-labelledby="list-siswa-list">
-        <form>
-          <div class="form-group row">
-            <label for="exampleFormControlSelect1" class="col-sm-2 col-form-label">Kelas</label>
-            <div class="col-sm-10">
-              <select class="form-control" id="exampleFormControlSelect1">
-              <option selected>Pilih</option>
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-            </select>
-            </div>
+        <div class="siswa-err-msg" align="center" style="color: red"></div>
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">NISN</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control siswa-nisn" placeholder="NISN">
           </div>
-          <div class="form-group row">
-            <label for="exampleFormControlSelect1" class="col-sm-2 col-form-label">Nama Wali Kelas</label>
-            <div class="col-sm-10">
-              <select class="form-control" id="exampleFormControlSelect1">
-              <option selected>Pilih</option>
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-            </select>
-            </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Nama</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control siswa-nm" placeholder="Nama">
           </div>
-          <div class="form-group row">
-            <label for="inputPassword" class="col-sm-2 col-form-label">Tahun Pelajaran</label>
-            <div class="col-sm-10">
-              <input type="text" class="form-control" id="inputPassword" placeholder="Tahun Pelajaran">
-            </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Kelas</label>
+          <div class="col-sm-8 option-siswa-kls">
           </div>
-          <div class="form-group row">
-            <label for="inputPassword" class="col-sm-2 col-form-label">Tanggal Input</label>
-            <div class="col-sm-10">
-              <input type="date" class="form-control" id="inputPassword" placeholder="Tahun Pelajaran">
-            </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Tahun Masuk</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control siswa-thn-msk" placeholder="Tahun Masuk">
           </div>
-          <button type="submit" class="btn btn-primary mb-2">Submit</button>
-        </form>
-      </div>      
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Password</label>
+          <div class="col-sm-8">
+            <input type="password" class="form-control siswa-pass" placeholder="Password">
+          </div>
+        </div>
+
+          <button type="submit" class="btn btn-primary mb-2 btn-add-siswa">Submit Siswa</button>
+      </div>  
+      <!-- END OF SISWA -->
+
     </div>
   </div>
 </div>

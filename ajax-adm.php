@@ -170,11 +170,96 @@
 
     }elseif($txInd == "jadwal-find"){
         $kls = $_POST['kls'];
+        $hari = $_POST['hari'];
+        $jam = $_POST['jam'];
 
-        $query = mysqli_query($connection, "SELECT * FROM jadwal WHERE kelas_cd = '$kls'");
+        $queryKls = mysqli_query($connection, "SELECT * FROM mata_pelajaran mp LEFT JOIN kelas kl on mp.kelas = kl.kelas WHERE kl.kelas_cd = '$kls'");
+        $rowsKls = mysqli_num_rows($queryKls);
+
+        $query = mysqli_query($connection, "SELECT * FROM jadwal jd LEFT JOIN mata_pelajaran mp on jd.mp_cd = mp.mp_cd WHERE kelas_cd = '$kls' AND hari = '$hari' AND jam = '$jam'");
         $rows = mysqli_num_rows($query);
 
-        $rsp .= "<select class='form-control jadwal-kls-cd' placeholder='Kelas'>";
+        $rsp .= "<select class='form-control jadwal-mp-cd' placeholder='Mata-Pelajaran'>";
+        //$rsp .= "<option value='0' selected hidden readonly>Mata Pelajaran</option>";
+
+        $data = mysqli_fetch_array($query);
+
+        if($data['nama_mp'] == ''){
+            $rsp .= "<option value='0' selected hidden readonly>MaPel Belum dipilih</option>";
+            for($i=0;$i<$rowsKls;$i++){
+                $dataMp = mysqli_fetch_array($queryKls);
+                $rsp .= "<option value='" .$dataMp['mp_cd']. "'>" .$dataMp['nama_mp']. "</option>";
+            }
+        }else{
+            for($i=0;$i<$rows;$i++){
+                $rsp .= "<option value='" .$data['mp_cd']. "' hidden selected>" .$data['nama_mp']. "</option>";
+                        $data = mysqli_fetch_array($query);
+            }
+            for($i=0;$i<$rowsKls;$i++){
+                $dataMp = mysqli_fetch_array($queryKls);
+                $rsp .= "<option value='" .$dataMp['mp_cd']. "'>" .$dataMp['nama_mp']. "</option>";
+            }
+        }
+
+        $rsp .= "</select>";
+
+        echo $rsp;
+    
+    }elseif($txInd == "jadwal-guru-find"){
+        $kls = $_POST['kls'];
+        $hari = $_POST['hari'];
+        $jam = $_POST['jam'];
+        $mpCd = $_POST['mpCd'];
+
+        $queryGr = mysqli_query($connection, "SELECT * FROM guru WHERE mp_cd = '$mpCd'");
+        $rowsGr = mysqli_num_rows($queryGr);
+
+        $query = mysqli_query($connection, "SELECT * FROM jadwal jd LEFT JOIN guru gr on jd.guru_cd = gr.guru_cd WHERE kelas_cd = '$kls' AND hari = '$hari' AND jam = '$jam'");
+        $rows = mysqli_num_rows($query);
+
+        $rsp .= "<select class='form-control jadwal-guru-cd' placeholder='Guru'>";
+        //$rsp .= "<option value='0' selected hidden readonly>Mata Pelajaran</option>";
+
+        $data = mysqli_fetch_array($query);
+
+        if(strlen($data['nama']) <= 1 || $data['mp_cd'] != $mpCd ){
+            $rsp .= "<option value='0' selected hidden readonly>Guru Belum dipilih</option>";
+            for($i=0;$i<$rowsGr;$i++){
+                $dataGr = mysqli_fetch_array($queryGr);
+                $rsp .= "<option value='" .$dataGr['guru_cd']. "'>" .$dataGr['nama']. "</option>";
+            }
+        }else{
+            for($i=0;$i<$rows;$i++){
+                $rsp .= "<option value='" .$data['guru_cd']. "' hidden selected>" .$data['nama']. "</option>";
+                        $data = mysqli_fetch_array($query);
+            }
+            for($i=0;$i<$rowsGr;$i++){
+                $dataGr = mysqli_fetch_array($queryGr);
+                $rsp .= "<option value='" .$dataGr['guru_cd']. "'>" .$dataGr['nama']. "</option>";
+            }
+        }
+
+        $rsp .= "</select>";
+
+        echo $rsp;
+
+    }elseif($txInd == "jadwal-insert"){
+        $kls = $_POST['kls'];
+        $hari = $_POST['hari'];
+        $jam = $_POST['jam'];
+        $mpCd = $_POST['mpCd'];
+        $guruCd = $_POST['guruCd'];
+
+        $query = mysqli_query($connection, "UPDATE jadwal SET mp_cd = '$mpCd', guru_cd = '$guruCd' WHERE kelas_cd = '$kls' AND hari = '$hari' AND jam = '$jam'");
+
+    // SISWA
+
+    }elseif($txInd == "siswa-drop-down"){
+        
+        $query = mysqli_query($connection, "SELECT * FROM kelas ORDER BY kelas_cd");
+        $rows = mysqli_num_rows($query);
+
+        $rsp .= "<select class='form-control siswa-kls-cd' placeholder='Kelas'>";
         $rsp .= "<option value='0' selected hidden readonly>Kelas</option>";
 
         if($rows <= 0){
@@ -189,7 +274,27 @@
         $rsp .= "</select>";
 
         echo $rsp;
-    }
 
+    }elseif($txInd == "siswa-insert"){
+        $sNisn = $_POST['sNisn'];
+        $sNm = $_POST['sNm'];
+        $sKls = $_POST['sKls'];
+        $sThnMsk = $_POST['sThnMsk'];
+        $sPass = $_POST['sPass'];
+
+        $queryCk = mysqli_query($connection, "SELECT * FROM siswa where nisn = '$sNisn'");
+        $rows = mysqli_num_rows($queryCk);
+
+        $rsp = "Siswa $sNm berhasil diinput kedalam database";
+        if($rows <= 0){
+            $query = mysqli_query($connection, "INSERT INTO siswa(nisn,nama,kelas_cd,tahun_masuk,password,alumni_ind,first_login_ind) VALUES('$sNisn','$sNm','$sKls','$sThnMsk','$sPass',0,0)");
+        }else{
+            $rsp = "NISN telah digunakan!";
+        }
+        
+        echo $rsp;
+    // SISWA
+
+    }
 
 ?>

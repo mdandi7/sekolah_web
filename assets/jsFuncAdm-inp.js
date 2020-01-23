@@ -310,6 +310,7 @@ $(document).ready(function(){
 			return false;
 		}
 	});
+	// END OF KELAS
 
 	// JADWAL 
 
@@ -331,25 +332,170 @@ $(document).ready(function(){
 
 	onLoadJadwalKelas();
 
-	$(document).on("change",".jadwal-kls-cd",function(e){
-		var kls = $(this).val();
+	$(document).on("change",".jadwal-kls-cd, .jadwal-hari, .jadwal-jam",function(e){
+		var kls = $(".jadwal-kls-cd").val();
+		var hari = $(".jadwal-hari").val();
+		var jam = $(".jadwal-jam").val();
+		var ScInd = 1;
 
+		if(kls == '0' || hari == '0' || jam == '0'){
+			//$("jadwal-err-msg").html("Pilih Option dibawah");
+			ScInd = 0;
+			return false;
+
+		}
+
+		if(ScInd == 1){
+			$.ajax({
+				type : 'POST',
+				url : 'ajax-adm.php',
+				async : false,
+				data : {
+					txInd : 'jadwal-find',
+					kls : kls,
+					hari : hari,
+					jam : jam,
+				},
+				complete : function(response){
+					$(".option-jadwal-mp").html(response.responseText);
+					$(".jadwal-mp-cd").trigger("change");
+				},
+				erorr : function(){
+					alert("Connection to database failed!");
+				}
+			});	
+		}
+		
+	})
+
+	$(document).on("change",".jadwal-mp-cd",function(e){
+		var kls = $(".jadwal-kls-cd").val();
+		var hari = $(".jadwal-hari").val();
+		var jam = $(".jadwal-jam").val();
+		var mpCd = $(this).val();
+		ScInd = 1;
+
+		if(kls == '0' || hari == '0' || jam == '0'){
+			//$("jadwal-err-msg").html("Pilih Option dibawah");
+			ScInd = 0;
+			return false;
+
+		}
+
+		if(ScInd == 1){
+			$.ajax({
+				type : 'POST',
+				url : 'ajax-adm.php',
+				async : false,
+				data : {
+					txInd : 'jadwal-guru-find',
+					mpCd : mpCd,
+					kls : kls,
+					hari : hari,
+					jam : jam,
+				},
+				complete : function(response){
+					$(".option-jadwal-guru").html(response.responseText);
+				},
+				erorr : function(){
+					alert("Connection to database failed!");
+				}
+			});	
+		}
+	});
+
+	$(document).on("click",".btn-add-jadwal",function(e){
+		var kls = $(".jadwal-kls-cd").val();
+		var hari = $(".jadwal-hari").val();
+		var jam = $(".jadwal-jam").val();
+		var mpCd = $(".jadwal-mp-cd").val();
+		var guruCd = $(".jadwal-guru-cd").val();
+		var ScInd = 1;
+
+		if(kls == '0' || hari == '0' || jam == '0' || mpCd == '0' || guruCd == '0'){
+			$("jadwal-err-msg").html("Lengkapi Pilihan");
+			ScInd = 0;
+			return false
+		}
+
+		if(ScInd == 1){
+			$.ajax({
+				type : 'POST',
+				url : 'ajax-adm.php',
+				data : {
+					txInd : 'jadwal-insert',
+					mpCd : mpCd,
+					kls : kls,
+					hari : hari,
+					jam : jam,
+					guruCd : guruCd,
+				},
+				complete : function(response){
+					$(".jadwal-err-msg").html("Jadwal Berhasil di submit");
+				},
+				erorr : function(){
+					alert("Connection to database failed!");
+				}
+			});	
+		}
+	});
+
+	// END OF JADWAL
+
+	//SISWA
+	function onLoadSiswaKelas(e){
 		$.ajax({
 			type : 'POST',
 			url : 'ajax-adm.php',
 			data : {
-				txInd : 'jadwal-find',
-				kls : kls,
+				txInd : 'siswa-drop-down',
 			},
 			complete : function(response){
-				var klsNum = parseInt(response.responseText)+ 1;
-				kelasCd = kls + "-" + klsNum;
-				$(".kls-cd").val(kelasCd);
+				$(".option-siswa-kls").html(response.responseText);
 			},
 			erorr : function(){
 				alert("Connection to database failed!");
 			}
 		});
-	})
+	}
+
+	onLoadSiswaKelas();
+
+	$(document).on("click",".btn-add-siswa",function(e){
+		var sNisn = $(".siswa-nisn").val();
+		var sNm = $(".siswa-nm").val();
+		var sKls = $(".siswa-kls-cd").val();
+		var sThnMsk = $(".siswa-thn-msk").val();
+		var sPass = $(".siswa-pass").val();
+		var ScInd = 1;
+
+		if(!sNisn || !sNm || !sKls || !sThnMsk || !sPass){
+			$(".siswa-err-msg").html("Isi data dengan benar!");
+			ScInd = 0;
+			return false;
+		}
+
+		if(ScInd == 1){
+			$.ajax({
+				type : 'POST',
+				url : 'ajax-adm.php',
+				data : {
+					txInd : 'siswa-insert',
+					sNisn : sNisn,
+					sNm : sNm,
+					sKls : sKls,
+					sThnMsk : sThnMsk,
+					sPass : sPass,
+				},
+				complete : function(response){
+					$(".siswa-err-msg").html(response.responseText);
+				},
+				erorr : function(){
+					alert("Connection to database failed!");
+				}
+			});
+			return false;
+		}
+	});
 //END OF FILE
 });
