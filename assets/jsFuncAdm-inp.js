@@ -413,7 +413,7 @@ $(document).ready(function(){
 		var ScInd = 1;
 
 		if(kls == '0' || hari == '0' || jam == '0' || mpCd == '0' || guruCd == '0'){
-			$("jadwal-err-msg").html("Lengkapi Pilihan");
+			$(".jadwal-err-msg").html("Lengkapi Pilihan");
 			ScInd = 0;
 			return false
 		}

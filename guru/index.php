@@ -29,6 +29,11 @@ include "configdb.php";
     .carousel-multi-item-2 .card img {
     border-radius: 2px; }
 	</style>
+
+  <script src="../assets/jquery-3.4.1.min.js" type="text/javascript"></script>
+  <script src="../assets/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+  <script src="../assets/jsFuncGuru.js" type="text/javascript"></script>
+
 </head>
 <body class="text-monospace">
 
@@ -68,7 +73,7 @@ Website Sekolah
         </div>
       </li> -->
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Guru</a>
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $login_session ?></a>
         <div class="dropdown-menu dropdown-menu-right text-center" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="../logout.php">Logout</a>
         </div>
@@ -82,15 +87,14 @@ Website Sekolah
     <div class="list-group " id="list-tab" role="tablist">
       <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home">Website Sekolah</a>
       <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab" aria-controls="profile">Profile</a>
-      <a class="list-group-item list-group-item-action" id="list-siswa-list" data-toggle="list" href="#list-siswa" role="tab" aria-controls="siswa">Input Data</a>
-      <a class="list-group-item list-group-item-action" id="list-mapel-list" data-toggle="list" href="#list-mapel" role="tab" aria-controls="mapel">Jadwal Mengajar</a>
-      <a class="list-group-item list-group-item-action" id="list-kelas-list" data-toggle="list" href="#list-kelas" role="tab" aria-controls="kelas">Daftar Nilai</a>
+      <a class="list-group-item list-group-item-action" id="list-jadwal-list" data-toggle="list" href="#list-jadwal" role="tab" aria-controls="jadwal">Jadwal Mengajar</a>
+      <a class="list-group-item list-group-item-action" id="list-input-list" data-toggle="list" href="#list-input" role="tab" aria-controls="input">Input Nilai</a>
+      <a class="list-group-item list-group-item-action" id="list-update-list" data-toggle="list" href="#list-update" role="tab" aria-controls="update">Update Nilai</a>
     </div>
   </div>
   <div class="col-8">
     <div class="tab-content pt-4" id="nav-tabContent">
-      <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">SISTEM INFORMASI SEKOLAH</div>
-      <div class="tab-pane fade text-justify" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
+      <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
         <h4 class="">Visi, Misi dan Tujuan</h5><br><br>
         <h5 class="">Visi Sekolah</h5>
         <p>” MEWUJUDKAN SISWA – SISWI YANG BERPRESTASI, BERIMAN DAN BERTAQWA KEPADA  TUHAN YANG MAHA ESA SERTA CINTA TERHADAP LINGKUNGAN. ”</p>
@@ -106,228 +110,122 @@ Website Sekolah
         <li>Pembiasaan 3 K( Kebersihan diri, Kebersihan Kelas, dan Kebersihan lingkungan) dan 3S (Senyum, Sapa, Salam)</li></p>
       </div>
 
-      
-      <div class="tab-pane fade" id="list-siswa" role="tabpanel" aria-labelledby="list-siswa-list">
-      <form>
+      <!-- PROFILE GURU -->
+      <div class="tab-pane fade text-justify" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
+        <div class="form-input-guru">
+        <div class="guru-err-msg" align="center" style="color: red"></div>
         <div class="form-group row">
-          <label for="inputPassword" class="col-sm-4 col-form-label">Kode Guru Pengajar</label>
+          <label class="col-sm-4 col-form-label">Kode Guru</label>
           <div class="col-sm-8">
-            <input type="text" class="form-control" id="inputPassword" placeholder="Kode Guru Pengajar">
+            <input type="text" class="form-control guru-cd" placeholder="Kode Guru Pengajar" value="<?php echo $row['guru_cd'];?>" readonly>
           </div>
         </div>
         <div class="form-group row">
-          <label for="inputPassword" class="col-sm-4 col-form-label">Nama Guru Pengajar</label>
+          <label class="col-sm-4 col-form-label">Nama</label>
           <div class="col-sm-8">
-            <input type="text" class="form-control" id="inputPassword" placeholder="Nama Guru Pengajar">
+            <input type="text" class="form-control guru-nm" placeholder="Nama" value="<?php echo $row['nama'];?>">
           </div>
         </div>
         <div class="form-group row">
-          <label for="inputPassword" class="col-sm-4 col-form-label">NIP</label>
+          <label class="col-sm-4 col-form-label">NIP</label>
           <div class="col-sm-8">
-            <input type="text" class="form-control" id="inputPassword" placeholder="NIP">
+            <input type="text" class="form-control guru-nip" placeholder="NIP" value="<?php echo $row['nip'];?>">
           </div>
         </div>
         <div class="form-group row">
-          <label for="exampleFormControlSelect1" class="col-sm-4 col-form-label">Jenis Kelamin</label>
+          <label class="col-sm-4 col-form-label">Tempat Lahir</label>
           <div class="col-sm-8">
-            <select class="form-control" id="exampleFormControlSelect1">
-            <option selected>Pilih</option>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-          </select>
-          </div>
-        </div>
-        <!-- <div class="form-group row">
-          <label for="inputPassword" class="col-sm-2 col-form-label">Tempat Lahir</label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" id="inputPassword" placeholder="Tempat Lahir">
-          </div>
-        </div> -->
-        <div class="form-group row">
-          <label for="inputPassword" class="col-sm-4 col-form-label">Tanggal Lahir</label>
-          <div class="col-sm-8">
-            <input type="date" class="form-control" id="inputPassword" placeholder="Tanggal Lahir">
+            <input type="text" class="form-control guru-tpt-lhr" placeholder="Tempat Lahir" value="<?php echo $row['tempat_lahir'];?>">
           </div>
         </div>
         <div class="form-group row">
-          <label for="inputPassword" class="col-sm-4 col-form-label">Alamat Guru</label>
+          <label class="col-sm-4 col-form-label">Tanggal Lahir</label>
           <div class="col-sm-8">
-            <input type="text" class="form-control" id="inputPassword" placeholder="Alamat Guru">
+            <input type="date" class="form-control guru-tgl-lhr" value="<?php echo $row['tgl_lahir'];?>">
           </div>
         </div>
         <div class="form-group row">
-          <label for="inputPassword" class="col-sm-4 col-form-label">No. Telepon</label>
+          <label class="col-sm-4 col-form-label">Alamat</label>
           <div class="col-sm-8">
-            <input type="text" class="form-control" id="inputPassword" placeholder="No. Telepon">
+            <input type="text" class="form-control guru-almt" placeholder="Alamat" value="<?php echo $row['alamat'];?>">
           </div>
         </div>
         <div class="form-group row">
-          <label for="exampleFormControlSelect1" class="col-sm-4 col-form-label">Status Pegawai</label>
+          <label class="col-sm-4 col-form-label">Telepon</label>
           <div class="col-sm-8">
-            <select class="form-control" id="exampleFormControlSelect1">
-            <option selected>Pilih</option>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
+            <input type="text" class="form-control guru-tlp" placeholder="Telepon" value="<?php echo $row['telp'];?>">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Pendidikan Terakhir</label>
+          <div class="col-sm-8">
+            <select class="form-control guru-pddk" placeholder="Pendidikan">
+            <option value="<?php echo $row['pendidikan'];?>" selected hidden readonly><?php echo $row['pendidikan'];?></option>
+            <option>D1/D2/D3</option>
+            <option>Sarjana (S1)</option>
+            <option>Magister (S2)</option>
+            <option>Doctor (S3)</option>
           </select>
           </div>
         </div>
         <div class="form-group row">
-          <label for="exampleFormControlSelect1" class="col-sm-4 col-form-label">Jabatan</label>
+          <label class="col-sm-4 col-form-label">Jabatan</label>
           <div class="col-sm-8">
-            <select class="form-control" id="exampleFormControlSelect1">
-            <option selected>Pilih</option>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-          </select>
+            <input type="text" class="form-control guru-jbtn" placeholder="Jabatan" readonly="readonly" value="<?php echo $row['jabatan'];?>">
           </div>
         </div>
         <div class="form-group row">
-          <label for="exampleFormControlSelect1" class="col-sm-4 col-form-label">Pendidikan Terakhir</label>
+          <label class="col-sm-4 col-form-label">Mata Pelajaran</label>
           <div class="col-sm-8">
-            <select class="form-control" id="exampleFormControlSelect1">
-            <option selected>Pilih</option>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-          </select>
+            <input type="text" class="form-control guru-mp" placeholder="Telepon" readonly="readonly" value="<?php echo $row['nama_mp'];?>">
           </div>
         </div>
-        <div class="form-group row">
-          <label for="exampleFormControlSelect1" class="col-sm-4 col-form-label">Tugas Mengajar</label>
-          <div class="col-sm-8">
-            <select class="form-control" id="exampleFormControlSelect1">
-            <option selected>Pilih</option>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-          </select>
-          </div>
+        <button type="submit" class="btn btn-primary mb-2 btn-updt-guru">Update Profile</button>
         </div>
-        <div class="form-group row">
-          <label for="inputPassword" class="col-sm-4 col-form-label">Jumlah Jam Mengajar</label>
-          <div class="col-sm-8">
-            <input type="text" class="form-control" id="inputPassword" placeholder="Jumlah Jam Mengajar">
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="inputPassword" class="col-sm-4 col-form-label">Tanggal Uji Sertifikasi</label>
-          <div class="col-sm-8">
-            <input type="date" class="form-control" id="inputPassword" placeholder="Tanggal Uji">
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="inputPassword" class="col-sm-4 col-form-label">Tahun Lulus Sertifikasi</label>
-          <div class="col-sm-8">
-            <input type="text" class="form-control" id="inputPassword" placeholder="Tahun Lulus Sertifikasi">
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="inputPassword" class="col-sm-4 col-form-label">Skor Nilai Pedagodik</label>
-          <div class="col-sm-8">
-            <input type="text" class="form-control" id="inputPassword" placeholder="Skor Nilai Pedagodik">
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="inputPassword" class="col-sm-4 col-form-label">Skor Nilai Sosial</label>
-          <div class="col-sm-8">
-            <input type="text" class="form-control" id="inputPassword" placeholder="Skor Nilai Sosial">
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="inputPassword" class="col-sm-4 col-form-label">Skor Nilai Kepribadian</label>
-          <div class="col-sm-8">
-            <input type="text" class="form-control" id="inputPassword" placeholder="Skor Nilai Kepribadian">
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="inputPassword" class="col-sm-4 col-form-label">Skor Nilai Profesional</label>
-          <div class="col-sm-8">
-            <input type="text" class="form-control" id="inputPassword" placeholder="Skor Nilai Profesional">
-          </div>
-        </div>
-        <button type="submit" class="btn btn-primary mb-2">Submit</button>
-        </form>
       </div>
+      <!-- END OF PROFILE GURU -->
 
-      <div class="tab-pane fade" id="list-mapel" role="tabpanel" aria-labelledby="list-mapel-list">
-      <form>
-      <div><h3 class="text-center">Jadwal Mengajar</h3>
+      <!-- JADWAL -->
+      <div class="tab-pane fade" id="list-jadwal" role="tabpanel" aria-labelledby="list-jadwal-list">
+      <div><h3 class="text-center">Jadwal</h3>
         <table class="table table-responsive-md text-center">
           <thead>
             <tr>
-              <th scope="col">No</th>
+              <th scope="col">Nama Guru</th>
+              <th scope="col">Mata Pelajaran</th>
               <th scope="col">Hari</th>
               <th scope="col">Jam</th>
-              <th scope="col">Mata Pelajaran</th>
+              <th scope="col">Kelas</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Larry</td>
-              <td>the Bird</td>
-              <td>@twitter</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      </div>
-      <div class="tab-pane fade" id="list-kelas" role="tabpanel" aria-labelledby="list-kelas-list">
-      <div><h3 class="text-center">Input Nilai</h3>
-        <table class="table table-responsive-md text-center">
-          <thead>
-            <tr>
-              <th scope="col">No</th>
-              <th scope="col">Nama Siswa</th>
-              <th scope="col">Mata Pelajaran</th>
-              <th scope="col">Nilai</th>
-            </tr>
-          </thead>
-          <tbody>
+          <tbody class="table-jadwal-guru">
             <tr>
               <th scope="row">1</th>
               <td>Mark</td>
               <td>Otto</td>
             </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Larry</td>
-              <td>the Bird</td>
-            </tr>
           </tbody>
         </table>
       </div>
       </div>
+      <!-- END OF JADWAL -->
+
+      <!-- NILAI -->      
+      <div class="tab-pane fade" id="list-input" role="tabpanel" aria-labelledby="list-input-list">
+      <h3 class="text-center">Input Nilai</h3>
+      <div class="table-nilai-insert">
+      </div>
+      </div>
+      <!-- END OF NILAI -->
+
+      <!-- UPDATE -->      
+      <div class="tab-pane fade" id="list-update" role="tabpanel" aria-labelledby="list-update-list">
+      <h3 class="text-center">Update Nilai</h3>
+      <div class="table-nilai-update">
+      </div>
+      </div>
+      <!-- END OF UPDATE -->
+
     </div>
   </div>
 </div>
@@ -426,6 +324,5 @@ Website Sekolah
 
 </body>
 
-<script src="../assets/jquery-3.4.1.min.js" type="text/javascript"></script>
-<script src="../assets/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+
 </html>

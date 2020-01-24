@@ -29,6 +29,11 @@ include "configdb.php";
     .carousel-multi-item-2 .card img {
     border-radius: 2px; }
 	</style>
+
+  <script src="../assets/jquery-3.4.1.min.js" type="text/javascript"></script>
+  <script src="../assets/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+  <script src="../assets/jsFuncSiswa.js" type="text/javascript"></script>\
+
 </head>
 <body class="text-monospace">
 
@@ -68,7 +73,7 @@ Website Sekolah
         </div>
       </li> -->
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Siswa</a>
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $row['nama']; ?></a>
         <div class="dropdown-menu dropdown-menu-right text-center" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="../logout.php">Logout</a>
         </div>
@@ -77,20 +82,19 @@ Website Sekolah
   </div>
 </nav>
 
+
 <div class="container-fluid row pl-0 pb-0">
   <div class="col-4 bg-dark pb-3">
     <div class="list-group " id="list-tab" role="tablist">
       <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home">Website Sekolah</a>
       <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab" aria-controls="profile">Profile</a>
-      <a class="list-group-item list-group-item-action" id="list-siswa-list" data-toggle="list" href="#list-siswa" role="tab" aria-controls="siswa">Input Data</a>
-      <a class="list-group-item list-group-item-action" id="list-mapel-list" data-toggle="list" href="#list-mapel" role="tab" aria-controls="mapel">Daftar Kelas dan Jadwal Pelajaran</a>
-      <a class="list-group-item list-group-item-action" id="list-kelas-list" data-toggle="list" href="#list-kelas" role="tab" aria-controls="kelas">Daftar Nilai</a>
+      <a class="list-group-item list-group-item-action" id="list-jadwal-list" data-toggle="list" href="#list-jadwal" role="tab" aria-controls="jadwal">Jadwal</a>
+      <a class="list-group-item list-group-item-action" id="list-input-list" data-toggle="list" href="#list-input" role="tab" aria-controls="input">Nilai</a>
     </div>
   </div>
   <div class="col-8">
     <div class="tab-content pt-4" id="nav-tabContent">
-      <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">SISTEM INFORMASI SEKOLAH</div>
-      <div class="tab-pane fade text-justify" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
+      <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
         <h4 class="">Visi, Misi dan Tujuan</h5><br><br>
         <h5 class="">Visi Sekolah</h5>
         <p>” MEWUJUDKAN SISWA – SISWI YANG BERPRESTASI, BERIMAN DAN BERTAQWA KEPADA  TUHAN YANG MAHA ESA SERTA CINTA TERHADAP LINGKUNGAN. ”</p>
@@ -105,146 +109,99 @@ Website Sekolah
         <li>Mewujudkan sekolah hijau ( Gereen School ).</li>
         <li>Pembiasaan 3 K( Kebersihan diri, Kebersihan Kelas, dan Kebersihan lingkungan) dan 3S (Senyum, Sapa, Salam)</li></p>
       </div>
-      <div class="tab-pane fade" id="list-siswa" role="tabpanel" aria-labelledby="list-siswa-list">
-      <form>
+
+      <!-- PROFILE GURU -->
+      <div class="tab-pane fade text-justify" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
+        <div class="form-input-guru">
+        <div class="siswa-err-msg" align="center" style="color: red"></div>
         <div class="form-group row">
-          <label for="inputPassword" class="col-sm-2 col-form-label">No. NISN</label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" id="inputPassword" placeholder="No. NISN">
+          <label class="col-sm-4 col-form-label">NISN</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control ss-nisn" placeholder="NISN" value="<?php echo $row['nisn'];?>" readonly>
           </div>
         </div>
         <div class="form-group row">
-          <label for="inputPassword" class="col-sm-2 col-form-label">Nama Siswa</label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" id="inputPassword" placeholder="Nama Siswa">
+          <label class="col-sm-4 col-form-label">Nama</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control ss-nm" placeholder="Nama" value="<?php echo $row['nama'];?>">
           </div>
         </div>
         <div class="form-group row">
-          <label for="exampleFormControlSelect1" class="col-sm-2 col-form-label">Jenis Kelamin</label>
-          <div class="col-sm-10">
-            <select class="form-control" id="exampleFormControlSelect1">
-            <option selected>Pilih</option>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-          </select>
+          <label class="col-sm-4 col-form-label">Jenis Kelamin</label>
+          <div class="col-sm-8">
+            <select class="form-control ss-jk" placeholder="Pendidikan">
+              <option value="<?php echo $row['jenis_kelamin'];?>" selected hidden readonly><?php echo $row['jenis_kelamin'];?></option>
+              <option value="Laki-Laki">Laki-Laki</option>
+              <option value="Perempuan">Perempuan</option>
+            </select>
           </div>
         </div>
         <div class="form-group row">
-          <label for="inputPassword" class="col-sm-2 col-form-label">Tempat Lahir</label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" id="inputPassword" placeholder="Tempat Lahir">
+          <label class="col-sm-4 col-form-label">Tanggal Lahir</label>
+          <div class="col-sm-8">
+            <input type="date" class="form-control ss-tgl-lhr" value="<?php echo $row['tanggal_lahir'];?>">
           </div>
         </div>
         <div class="form-group row">
-          <label for="inputPassword" class="col-sm-2 col-form-label">Tanggal Lahir</label>
-          <div class="col-sm-10">
-            <input type="date" class="form-control" id="inputPassword" placeholder="Tanggal Lahir">
+          <label class="col-sm-4 col-form-label">Alamat</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control ss-almt" placeholder="Alamat" value="<?php echo $row['alamat'];?>">
           </div>
         </div>
         <div class="form-group row">
-          <label for="inputPassword" class="col-sm-2 col-form-label">Alamat Siswa</label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" id="inputPassword" placeholder="Alamat Siswa">
+          <label class="col-sm-4 col-form-label">Telepon</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control ss-tlp" placeholder="Telepon" value="<?php echo $row['telp'];?>">
           </div>
         </div>
         <div class="form-group row">
-          <label for="exampleFormControlSelect1" class="col-sm-2 col-form-label">Kelas</label>
-          <div class="col-sm-10">
-            <select class="form-control" id="exampleFormControlSelect1">
-            <option selected>Pilih</option>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-          </select>
+          <label class="col-sm-4 col-form-label">Tahun Masuk</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control ss-thn" placeholder="Tahun Masuk" value="<?php echo $row['tahun_masuk'];?>" readonly>
           </div>
         </div>
         <div class="form-group row">
-          <label for="inputPassword" class="col-sm-2 col-form-label">Tahun Masuk</label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" id="inputPassword" placeholder="Tahun Masuk">
+          <label class="col-sm-4 col-form-label">Kelas</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control ss-kls" placeholder="Kelas" value="<?php echo $row['kelas_cd'];?>" readonly>
           </div>
         </div>
-        <button type="submit" class="btn btn-primary mb-2">Submit</button>
-        </form>
+        <button type="submit" class="btn btn-primary mb-2 btn-updt-ss">Update Profile</button>
+        </div>
       </div>
-      <div class="tab-pane fade" id="list-mapel" role="tabpanel" aria-labelledby="list-mapel-list">
-      <form>
-        <div class="form-group row">
-          <label for="inputPassword" class="col-sm-2 col-form-label">Kelas</label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" id="inputPassword" placeholder="Kelas" readonly="">
-          </div>
-        </div>
-      </form><br>
-      <div><h3 class="text-center">Jadwal Pelajaran</h3>
+      <!-- END OF PROFILE GURU -->
+
+      <!-- JADWAL -->
+      <div class="tab-pane fade jadwal-table" id="list-jadwal" role="tabpanel" aria-labelledby="list-jadwal-list">
+      </div>
+      <!-- END OF JADWAL -->
+
+      <!-- NILAI -->      
+      <div class="tab-pane fade" id="list-input" role="tabpanel" aria-labelledby="list-input-list">
+      <div><h3 class="text-center">Nilai</h3>
         <table class="table table-responsive-md text-center">
           <thead>
             <tr>
-              <th scope="col">No</th>
-              <th scope="col">Hari</th>
-              <th scope="col">Jam</th>
-              <th scope="col">Mata Pelajaran</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Larry</td>
-              <td>the Bird</td>
-              <td>@twitter</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      </div>
-      <div class="tab-pane fade" id="list-kelas" role="tabpanel" aria-labelledby="list-kelas-list">
-      <div><h3 class="text-center">Daftar Nilai</h3>
-        <table class="table table-responsive-md text-center">
-          <thead>
-            <tr>
-              <th scope="col">No</th>
+              <th scope="col">Kelas</th>
+              <th scope="col">Guru</th>
               <th scope="col">Mata Pelajaran</th>
               <th scope="col">Nilai</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody class="table-nilai-ss">
             <tr>
               <th scope="row">1</th>
               <td>Mark</td>
               <td>Otto</td>
             </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Larry</td>
-              <td>the Bird</td>
-            </tr>
           </tbody>
         </table>
       </div>
       </div>
-    </div>
+      <!-- END OF NILAI -->
+
+
+      </div>
   </div>
 </div>
 
@@ -342,6 +299,4 @@ Website Sekolah
 
 </body>
 
-<script src="../assets/jquery-3.4.1.min.js" type="text/javascript"></script>
-<script src="../assets/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 </html>

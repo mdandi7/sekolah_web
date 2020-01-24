@@ -29,4 +29,68 @@ $(document).ready(function(){
 	};
 
 	onLoadTables();
+
+
+	$(document).on("click",".btn-non-guru",function(e){
+		var guruCd = $(this).attr("data-id");
+
+		$.ajax({
+			type : 'POST',
+			url : 'ajax-adm-show.php',
+			data :{
+				txInd : 'guru-nonaktif',
+				guruCd : guruCd,
+			},
+			complete : function(resp){
+				onLoadTables();
+			},
+			erorr : function(){
+				alert("Connection to database failed!");
+			}
+
+		});
+		return false;
+	});
+
+	$(document).on("click",".btn-alm-siswa",function(e){
+		var nisn = $(this).attr("data-id");
+
+		$.ajax({
+			type : 'POST',
+			url : 'ajax-adm-show.php',
+			data :{
+				txInd : 'siswa-alm',
+				nisn : nisn,
+			},
+			complete : function(resp){
+				onLoadTables();
+			},
+			erorr : function(){
+				alert("Connection to database failed!");
+			}
+
+		});
+		return false;
+	});
+
+	$(document).on("click",".btn-delete-mp",function(e){
+		var mpCd = $(this).attr("data-id");
+
+		$.ajax({
+			type : 'POST',
+			url : 'ajax-adm-show.php',
+			data :{
+				txInd : 'mp-dlt',
+				mpCd : mpCd,
+			},
+			complete : function(resp){
+				onLoadTables();
+			},
+			erorr : function(){
+				alert("Connection to database failed!");
+			}
+
+		});
+		return false;
+	});
 });

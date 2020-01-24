@@ -18,6 +18,10 @@
     	}else{
     		for($i=0;$i<$rows;$i++){
     			$data = mysqli_fetch_array($query);
+    			$work = '';
+    			if($data['work_ind'] == 0){
+    				$work = 'disabled'; 
+    			}
     			$rsp .= "<tr><th scope='row'>" .$data['guru_cd']. "</th>";
     			$rsp .= "<td>" .$data['nama']. "</td>";
     			$rsp .= "<td>" .$data['nip']. "</td>";
@@ -25,7 +29,7 @@
     			$rsp .= "<td>" .$data['jabatan']. "</td>";
     			$rsp .= "<td>" .$data['kelas_cd']. "</td>";
     			
-    			$rsp .= "<td><input data-id='" .$data['guru_cd']. "' class='btn-non-guru btn btn-md btn-primary btn-info btn-block' type='submit' value='Nonaktifkan'></td></tr>";
+    			$rsp .= "<td><input data-id='" .$data['guru_cd']. "' class='btn-non-guru btn btn-md btn-primary btn-info btn-block' type='submit' value='Nonaktifkan' $work></td></tr>";
     		}
     	}
 
@@ -168,5 +172,17 @@
     	}
     	echo $rsp;
 
+    }elseif($txInd == "guru-nonaktif"){
+    	$guruCd = $_POST['guruCd'];
+
+  		$query = mysqli_query($connection, "UPDATE guru SET work_ind = 0 WHERE guru_cd = '$guruCd'");
+    }elseif($txInd == "siswa-alm"){
+    	$nisn = $_POST['nisn'];
+
+  		$query = mysqli_query($connection, "UPDATE siswa SET alumni_ind = 1 WHERE nisn = '$nisn'");
+    }elseif($txInd == "mp-dlt"){
+    	$mpCd = $_POST['mpCd'];
+
+  		$query = mysqli_query($connection, "DELETE FROM mata_pelajaran WHERE mp_cd = '$mpCd'");
     }
 ?>

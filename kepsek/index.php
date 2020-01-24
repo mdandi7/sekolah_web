@@ -29,6 +29,11 @@ include "configdb.php";
     .carousel-multi-item-2 .card img {
     border-radius: 2px; }
 	</style>
+
+  <script src="../assets/jquery-3.4.1.min.js" type="text/javascript"></script>
+  <script src="../assets/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+  <script src="../assets/jsFuncKepsek.js" type="text/javascript"></script>
+
 </head>
 <body class="text-monospace">
 
@@ -68,7 +73,7 @@ Website Sekolah
         </div>
       </li> -->
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Kepala Sekolah</a>
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $login_session ?></a>
         <div class="dropdown-menu dropdown-menu-right text-center" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="../logout.php">Logout</a>
         </div>
@@ -82,16 +87,17 @@ Website Sekolah
     <div class="list-group " id="list-tab" role="tablist">
       <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home">Website Sekolah</a>
       <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab" aria-controls="profile">Profile</a>
+      <a class="list-group-item list-group-item-action" id="list-jadwal-list" data-toggle="list" href="#list-jadwal" role="tab" aria-controls="jadwal">Jadwal</a>
+      <a class="list-group-item list-group-item-action" id="list-input-list" data-toggle="list" href="#list-input" role="tab" aria-controls="input">Insert Nilai</a>
+      <a class="list-group-item list-group-item-action" id="list-update-list" data-toggle="list" href="#list-update" role="tab" aria-controls="update">Update Nilai</a>
       <a class="list-group-item list-group-item-action" id="list-guru-list" data-toggle="list" href="#list-guru" role="tab" aria-controls="guru">Daftar Guru</a>
       <a class="list-group-item list-group-item-action" id="list-siswa-list" data-toggle="list" href="#list-siswa" role="tab" aria-controls="siswa">Daftar Siswa</a>
-      <a class="list-group-item list-group-item-action" id="list-wakel-list" data-toggle="list" href="#list-wakel" role="tab" aria-controls="wakel">Daftar Wali Kelas</a>
-      <a class="list-group-item list-group-item-action" id="list-nilai-list" data-toggle="list" href="#list-nilai" role="tab" aria-controls="nilai">Daftar Nilai Siswa</a>
+      <a class="list-group-item list-group-item-action" id="list-wakel-list" data-toggle="list" href="#list-wakel" role="tab" aria-controls="wakel">Daftar Kelas</a>
     </div>
   </div>
   <div class="col-8">
     <div class="tab-content pt-4" id="nav-tabContent">
-      <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">SISTEM INFORMASI SEKOLAH</div>
-      <div class="tab-pane fade text-justify" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
+      <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
         <h4 class="">Visi, Misi dan Tujuan</h5><br><br>
         <h5 class="">Visi Sekolah</h5>
         <p>” MEWUJUDKAN SISWA – SISWI YANG BERPRESTASI, BERIMAN DAN BERTAQWA KEPADA  TUHAN YANG MAHA ESA SERTA CINTA TERHADAP LINGKUNGAN. ”</p>
@@ -106,230 +112,174 @@ Website Sekolah
         <li>Mewujudkan sekolah hijau ( Gereen School ).</li>
         <li>Pembiasaan 3 K( Kebersihan diri, Kebersihan Kelas, dan Kebersihan lingkungan) dan 3S (Senyum, Sapa, Salam)</li></p>
       </div>
-      <div class="tab-pane fade" id="list-guru" role="tabpanel" aria-labelledby="list-guru-list">
-        <table class="table table-hover table-responsive-md text-center"><h4 class="text-center">Laporan Daftar Guru Pengajar</h3><br>
-          <thead class="thead-light">
+
+      <!-- PROFILE GURU -->
+      <div class="tab-pane fade text-justify" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
+        <div class="form-input-guru">
+        <div class="guru-err-msg" align="center" style="color: red"></div>
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Kode Guru</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control guru-cd" placeholder="Kode Guru Pengajar" value="<?php echo $row['guru_cd'];?>" readonly>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Nama</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control guru-nm" placeholder="Nama" value="<?php echo $row['nama'];?>">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">NIP</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control guru-nip" placeholder="NIP" value="<?php echo $row['nip'];?>">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Tempat Lahir</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control guru-tpt-lhr" placeholder="Tempat Lahir" value="<?php echo $row['tempat_lahir'];?>">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Tanggal Lahir</label>
+          <div class="col-sm-8">
+            <input type="date" class="form-control guru-tgl-lhr" value="<?php echo $row['tgl_lahir'];?>">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Alamat</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control guru-almt" placeholder="Alamat" value="<?php echo $row['alamat'];?>">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Telepon</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control guru-tlp" placeholder="Telepon" value="<?php echo $row['telp'];?>">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Pendidikan Terakhir</label>
+          <div class="col-sm-8">
+            <select class="form-control guru-pddk" placeholder="Pendidikan">
+            <option value="<?php echo $row['pendidikan'];?>" selected hidden readonly><?php echo $row['pendidikan'];?></option>
+            <option>D1/D2/D3</option>
+            <option>Sarjana (S1)</option>
+            <option>Magister (S2)</option>
+            <option>Doctor (S3)</option>
+          </select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Jabatan</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control guru-jbtn" placeholder="Jabatan" readonly="readonly" value="<?php echo $row['jabatan'];?>">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Mata Pelajaran</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control guru-mp" placeholder="Telepon" readonly="readonly" value="<?php echo $row['nama_mp'];?>">
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary mb-2 btn-updt-guru">Update Profile</button>
+        </div>
+      </div>
+      <!-- END OF PROFILE GURU -->
+
+      <!-- JADWAL -->
+      <div class="tab-pane fade" id="list-jadwal" role="tabpanel" aria-labelledby="list-jadwal-list">
+      <div><h3 class="text-center">Jadwal</h3>
+        <table class="table table-responsive-md text-center">
+          <thead>
             <tr>
-              <th scope="col">No</th>
               <th scope="col">Nama Guru</th>
-              <th scope="col">NIP</th>
-              <th scope="col">Alamat</th>
-              <th scope="col">No. Telepon</th>
-              <th scope="col">Kelas Mengajar</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-              <td>@mdo</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-              <td>@mdo</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Larry</td>
-              <td>the Bird</td>
-              <td>@twitter</td>
-              <td>@mdo</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <th scope="row">4</th>
-              <td>Larry</td>
-              <td>the Bird</td>
-              <td>@twitter</td>
-              <td>@mdo</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <th scope="row">5</th>
-              <td>Larry</td>
-              <td>the Bird</td>
-              <td>@twitter</td>
-              <td>@mdo</td>
-              <td>@mdo</td>
-            </tr>
-          </tbody>
-        </table><br>
-        <table class="table table-hover table-responsive-md text-center"><h4 class="text-center">Laporan Daftar Wali Kelas</h3><br>
-          <thead class="thead-light">
-            <tr>
-              <th scope="col">No</th>
+              <th scope="col">Mata Pelajaran</th>
+              <th scope="col">Hari</th>
+              <th scope="col">Jam</th>
               <th scope="col">Kelas</th>
-              <th scope="col">Nama Wali Kelas</th>
-              <th scope="col">Tahun Pelajaran</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Larry</td>
-              <td>the Bird</td>
-              <td>@twitter</td>
-            </tr>
-            <tr>
-              <th scope="row">4</th>
-              <td>Larry</td>
-              <td>the Bird</td>
-              <td>@twitter</td>
-            </tr>
-            <tr>
-              <th scope="row">5</th>
-              <td>Larry</td>
-              <td>the Bird</td>
-              <td>@twitter</td>
-            </tr>
+          <tbody class="table-jadwal-guru">
           </tbody>
         </table>
       </div>
-      <div class="tab-pane fade" id="list-siswa" role="tabpanel" aria-labelledby="list-siswa-list">
-        <table class="table table-hover table-responsive-md text-center"><h4 class="text-center">Laporan Daftar Siswa</h3><br>
+      </div>
+      <!-- END OF JADWAL -->
+
+      <!-- NILAI -->      
+      <div class="tab-pane fade" id="list-input" role="tabpanel" aria-labelledby="list-input-list">
+      <h3 class="text-center">Input Nilai</h3>
+      <div class="table-nilai-insert">
+      </div>
+      </div>
+      <!-- END OF NILAI -->
+
+      <!-- UPDATE -->
+      <div class="tab-pane fade" id="list-update" role="tabpanel" aria-labelledby="list-update-list">
+      <h3 class="text-center">Update Nilai</h3>
+      <div class="table-nilai-update">
+      </div>
+      </div>
+      <!-- END OF UPDATE -->
+
+      <!-- LIST GURU -->
+      <div class="tab-pane fade" id="list-guru" role="tabpanel" aria-labelledby="list-guru-list">
+        <table class="table table-hover table-responsive-md text-center"><h4 class="text-center">Guru</h3><br>
           <thead class="thead-light">
             <tr>
-              <th scope="col">No</th>
+              <th scope="col">NIP</th>
+              <th scope="col">Nama</th>
+              <th scope="col">JK</th>
+              <th scope="col">Alamat</th>
+              <th scope="col">Telepon</th>
+              <th scope="col">Jabatan</th>
+              <th scope="col">Wali Kelas</th>
+            </tr>
+          </thead>
+          <tbody class="table-guru">
+          </tbody>
+        </table>
+      </div>
+      <!-- END OF LIST GURU -->
+
+      <!-- LIST SISWA -->
+      <div class="tab-pane fade" id="list-siswa" role="tabpanel" aria-labelledby="list-siswa-list">
+        <table class="table table-hover table-responsive-md text-center"><h4 class="text-center">Siswa</h3><br>
+          <thead class="thead-light">
+            <tr>
               <th scope="col">NISN</th>
               <th scope="col">Nama Siswa</th>
+              <th scope="col">JK</th>
               <th scope="col">Alamat</th>
+              <th scope="col">Telepon</th>
               <th scope="col">Kelas</th>
               <th scope="col">Tahun Masuk</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>123456789643</td>
-              <td>Danny Bastian Manurung</td>
-              <td>Jl. Haluoleo Komp. Bumi Praja</td>
-              <td>@mdo</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-              <td>@mdo</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Larry</td>
-              <td>the Bird</td>
-              <td>@twitter</td>
-              <td>@mdo</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <th scope="row">4</th>
-              <td>Larry</td>
-              <td>the Bird</td>
-              <td>@twitter</td>
-              <td>@mdo</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <th scope="row">5</th>
-              <td>Larry</td>
-              <td>the Bird</td>
-              <td>@twitter</td>
-              <td>@mdo</td>
-              <td>@mdo</td>
-            </tr>
+          <tbody class="table-siswa">
           </tbody>
         </table>
       </div>
+      <!-- END OF LIST SISWA -->
+
+      <!-- LIST KELAS -->
       <div class="tab-pane fade" id="list-wakel" role="tabpanel" aria-labelledby="list-wakel-list">
-        <table class="table table-hover table-responsive-md text-center"><h4 class="text-center">Laporan Daftar Wali Kelas</h3><br>
+        <table class="table table-hover table-responsive-md text-center"><h4 class="text-center">List Kelas</h3><br>
           <thead class="thead-light">
             <tr>
-              <th scope="col">No</th>
               <th scope="col">Kelas</th>
+              <th scope="col">Kode Kelas</th>
               <th scope="col">Wali Kelas</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Larry</td>
-              <td>the Bird</td>
-            </tr>
-            <tr>
-              <th scope="row">4</th>
-              <td>Larry</td>
-              <td>the Bird</td>
-            </tr>
-            <tr>
-              <th scope="row">5</th>
-              <td>Larry</td>
-              <td>the Bird</td>
-            </tr>
+          <tbody class="table-kls">
           </tbody>
         </table>
       </div>
-      <div class="tab-pane fade" id="list-nilai" role="tabpanel" aria-labelledby="list-nilai-list">
-        <table class="table table-hover table-responsive-md text-center"><h4 class="text-center">Laporan Daftar Nilai Siswa</h3><br>
-          <thead class="thead-light">
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">First</th>
-              <th scope="col">Last</th>
-              <th scope="col">Handle</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Larry</td>
-              <td>the Bird</td>
-              <td>@twitter</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <!-- END OF LIST KELAS -->
+
     </div>
   </div>
 </div>

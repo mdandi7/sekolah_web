@@ -7,7 +7,7 @@ session_start();// Starting Session
 // Storing Session
 $user_check=$_SESSION['login_guru'];
 // SQL Query To Fetch Complete Information Of User
-$ses_sql = mysqli_query($connection, "select guru_cd, nama from guru where nip='$user_check'");
+$ses_sql = mysqli_query($connection, "select * from guru left join mata_pelajaran mp on guru.mp_cd = mp.mp_cd where nip='$user_check'");
 $row = mysqli_fetch_assoc($ses_sql);
 $login_session = $row['nama'];
 if(!isset($login_session)){
